@@ -13,6 +13,15 @@ struct Vector3
 
 namespace utility
 {
+	double frameTime;	//Frametime decleared here
+
+	//
+	double frameTiming(double frameTime, I3DEngine* myEngine)	//Frame time calculation
+	{
+		return frameTime = myEngine->Timer();
+	}
+
+	//
 	float getDistance(IModel* player, IModel* object)	//Returns the distance between two models
 	{
 		float playerX = player->GetX();
