@@ -20,6 +20,7 @@ void main()
 	{
 		// Draw the scene
 		myEngine->DrawScene();
+		fwsaijgfrwageraoijgers;
 
 		/**** Update your scene each frame here ****/
 
