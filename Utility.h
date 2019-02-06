@@ -16,9 +16,15 @@ namespace utility
 	double frameTime;	//Frametime decleared here
 
 	//
-	double frameTiming(double frameTime, I3DEngine* myEngine)	//Frame time calculation
+	double frameTime(double frameTime, I3DEngine* myEngine)	//Frame time calculation
 	{
 		return frameTime = myEngine->Timer();
+	}
+	
+	//
+	int framesPerSecond()	//Number of frames in ONE second
+	{
+		return 1 / frameTime;
 	}
 
 	//
