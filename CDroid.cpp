@@ -18,15 +18,11 @@ CDroid::~CDroid()
 
 void CDroid::Explode(IModel* player, IModel* droid)
 {
-	if (utility::getDistance(player, droid) < explosionDistance)	//If close enough to explode, then do so
+	if (utility::getDistance(player, droid) =< explosionDistance)	//If close enough to explode, then do so
 	{
 		/*MISSING - DO DAMAGE TO THE PLAYER IN explosionRadius*/
 		/*MISSING - SPAWN PARTICLE SYSTEM*/
 		/*MISSING - DELETE IN MAIN*/
-	}
-	else
-	{
-		return;
 	}
 }
 
