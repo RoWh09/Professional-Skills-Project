@@ -18,20 +18,16 @@ CMarine::~CMarine()	//Destructor
 
 void CMarine::Shoot(IModel* player, IModel* marine)
 {
-	if (utility::getDistance(player, marine) < fireDistance)	//If you are close enough to shoot then do shoot
+	if (utility::getDistance(player, marine) =< fireDistance)	//If you are close enough to shoot then do shoot
 	{
 		/*MISSING - SPAWN PARTICLE SYSTEM*/
 		/*MISSING - DEAL DAMAGE TO THE PLAYER*/
-	}
-	else
-	{
-		return;
 	}
 }
 
 void CMarine::Move(IModel* player, IModel* marine)
 {
-	while (utility::getDistance(player, marine) > fireDistance)		//Get in firing range
+	while (utility::getDistance(player, marine) >= fireDistance)		//Get in firing range
 	{
 		marine->LookAt(player);
 		marine->MoveLocalZ(moveSpeed * utility::frameTime);
