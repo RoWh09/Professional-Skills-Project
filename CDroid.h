@@ -1,8 +1,9 @@
 #pragma once
 #include <TL-Engine.h>	// TL-Engine include file and namespace
+#include "EnemiesInterface.h"
 using namespace tle;
 
-class CDroid
+class CDroid : IEnemies
 {
 private:
 	int health;
@@ -16,6 +17,9 @@ private:
 public:
 	CDroid();
 	~CDroid();
-	void Explode(IModel*, IModel*); //Explode if in range
-	void Move(IModel*, IModel*);	//Move till you get in range or move away if you are too close
+	void Approach(IModel*, IModel*); //Move till you get in range or move away if you are too close
+	void Aim(IModel*, IModel*);
+	void Fire(IModel*, IModel*); //Explode if in range
+	void Reload();
+	void Looking();
 };
