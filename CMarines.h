@@ -1,8 +1,9 @@
 #pragma once
 #include <TL-Engine.h>	// TL-Engine include file and namespace
+#include "EnemiesInterface.h"
 using namespace tle;
 
-class CMarine
+class CMarine : IEnemy
 {
 private:
 	int health;
@@ -15,6 +16,9 @@ private:
 public:
 	CMarine();
 	~CMarine();
-	void Shoot(IModel*, IModel*);
-	void Move(IModel*, IModel*);	//Move till you get in range or move away if you are too close
+	void Approach(IModel*, IModel*);	//Move till you get in range or move away if you are too close
+	void Aim();
+	void Fire(IModel*, IModel*);
+	void Reload();
+	void Looking();
 };
