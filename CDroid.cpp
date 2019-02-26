@@ -16,7 +16,7 @@ CDroid::~CDroid()
 	delete this;
 }
 
-void CDroid::Explode(IModel* player, IModel* droid)
+void CDroid::Fire(IModel* player, IModel* droid)
 {
 	if (utility::getDistance(player, droid) =< explosionDistance)	//If close enough to explode, then do so
 	{
@@ -26,7 +26,7 @@ void CDroid::Explode(IModel* player, IModel* droid)
 	}
 }
 
-void CDroid::Move(IModel* player, IModel* droid)
+void CDroid::Approach(IModel* player, IModel* droid)
 {
 	if (utility::getDistance(player, droid) > explosionDistance)	//If not close enough to explode, then move closer
 	{
