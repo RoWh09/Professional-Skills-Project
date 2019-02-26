@@ -11,12 +11,9 @@ CMarine::CMarine()	//Constructor
 	/*MISSING MODEL CREATION - NEEDS POSITION WHERE IT WILL BE SPAWNED*/
 }
 
-CMarine::~CMarine()	//Destructor
-{
-	delete this;
-}
+CMarine::~CMarine() {};//Destructor
 
-void CMarine::Shoot(IModel* player, IModel* marine)
+void CMarine::FIre(IModel* player, IModel* marine)
 {
 	if (utility::getDistance(player, marine) =< fireDistance)	//If you are close enough to shoot then do shoot
 	{
@@ -25,7 +22,7 @@ void CMarine::Shoot(IModel* player, IModel* marine)
 	}
 }
 
-void CMarine::Move(IModel* player, IModel* marine)
+void CMarine::Approach(IModel* player, IModel* marine)
 {
 	while (utility::getDistance(player, marine) >= fireDistance)		//Get in firing range
 	{
