@@ -14,9 +14,10 @@ void main()
 	/**** Set up your scene here ****/
 
 
-	float playerXPos;
+	float playerXPos; //Player positions
 	float playerZpos;
-	float mouseXPos;
+	
+	float mouseXPos; //Mouse positions
 	float mouseZPos;
 
 	//Camera
@@ -44,23 +45,23 @@ void main()
 		myEngine->DrawScene();
 		/**** Update your scene each frame here ****/
 
-		playerXPos = player->GetX();
+		playerXPos = player->GetX(); //Get current player position
 		playerZpos = player->GetX();
 
-		mouseXPos = myEngine->GetMouseMovementX();
+		mouseXPos = myEngine->GetMouseMovementX(); //Get current mouse position
 		mouseZPos = myEngine->GetMouseMovementY();
 
-		mouseXPos = mouseXPos;
-		mouseZPos = -mouseZPos;
+		mouseZPos = -mouseZPos; //Swap direction
 
-		dummy->MoveX(mouseXPos / 3);
+		dummy->MoveX(mouseXPos / 3); //Move a dummy where the mouse is and turn towards it
 		dummy->MoveZ(mouseZPos / 3);
 		player->LookAt(dummy);
 
-		myCamera->SetLocalX(player->GetX());
+		myCamera->SetLocalX(player->GetX()); //The camera is right above the player
 		myCamera->SetLocalZ(player->GetZ());
 		
-
+		
+		//Up, down, right, left movement
 		if (myEngine->KeyHeld(Key_W))
 		{
 			player->MoveZ(0.01);
@@ -81,12 +82,6 @@ void main()
 			player->MoveX(-0.01);
 			dummy->MoveX(-0.01);
 		}
-
-		if (myEngine->KeyHit(Key_Left))
-		{
-			player->MoveX(-0.01);
-		}
-
 	}
 
 	// Delete the 3D engine now we are finished with it
