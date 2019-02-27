@@ -13,7 +13,7 @@ CMarine::CMarine()	//Constructor
 
 CMarine::~CMarine() {};//Destructor
 
-void CMarine::FIre(IModel* player, IModel* marine)
+void CMarine::Fire(IModel* player, IModel* marine)
 {
 	if (utility::getDistance(player, marine) =< fireDistance)	//If you are close enough to shoot then do shoot
 	{
