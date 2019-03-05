@@ -1,4 +1,5 @@
 #pragma once
+#include "Utility.h"
 #include <TL-Engine.h>	// TL-Engine include file and namespace
 #include <deque>
 using namespace tle;
@@ -19,7 +20,7 @@ public:
 	float GetPosition(float& x, float& z);
 	void move(int speed);
 	void Delete();
-	void BulletCheck();
+	void BulletCheck(float playerxPos, float playerzPos, float playerRad, deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
 };
 
 //initialising the game with the existing tlEngine and the wanted speed of the bullet
@@ -54,4 +55,23 @@ void CRifle::move(int speed)
 void CRifle::Delete()
 {
 	bulletMesh->RemoveModel(bulletModel);
+}
+
+
+void CRifle::BulletCheck(float playerxPos, float playerzPos, float playerRad, deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr)
+{
+	auto p = bulletList.begin();
+	while (p != bulletList.end())
+	{
+		(*p)->GetPosition(bulletxPos, bulletzPos);
+		bool BulletOutRange = utility::getDistance(playerxPos, playerzPos, playerRad, bulletxPos, bulletzPos, 2.0f);
+
+		if (BulletOutRange == false)
+		{
+			(*p)->Delete();
+			bulletList.erase(p);
+			break;
+		}
+		p++;
+	}
 }
