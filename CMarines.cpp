@@ -1,7 +1,7 @@
 #include "CMarines.h"
 #include "Utility.h"
 
-CMarine::CMarine(IMesh* marineMesh, float x,float z, float rad)	//Constructor
+CMarine::CMarine(IMesh* marineMesh, float x, float z, float rad)	//Constructor
 {
 	mMesh = marineMesh;
 	health = 3;
@@ -17,15 +17,15 @@ CMarine::~CMarine() {};//Destructor
 
 void CMarine::BuildMarine(int x, int z)
 {
-	
+
 	marineModel = mMesh->CreateModel(x, 0.0f, z);
 }
 
-void CMarine::Fire(IModel* player,  IMesh* bulletMesh, int x, int y, int z, float& frameTime)
+void CMarine::Fire(IModel* player, IMesh* bulletMesh, int x, int y, int z, float& frameTime)
 {
-	
+
 	if (frameTime <= 0.5)
-	{ 
+	{
 
 	}
 	else
@@ -101,7 +101,7 @@ void CMarine::TakeDamage(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<
 
 bool  CMarine::Delete()
 {
-	
+
 	if (health <= 0)
 	{
 		if (!bulletList.empty())
@@ -110,10 +110,10 @@ bool  CMarine::Delete()
 		}
 		mMesh->RemoveModel(marineModel);
 		return true;
-		
+
 	}
-		return false;
-	
+	return false;
+
 }
 
 

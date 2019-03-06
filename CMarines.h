@@ -27,10 +27,9 @@ public:
 	void Approach(IModel* player);	//Move till you get in range or move away if you are too close
 	void Aim();
 	bool Delete();
-	void Fire(IModel* dummyModel,  IMesh* bulletMesh, int x, int y, int z, float& frameTime);
+	void Fire(IModel* dummyModel, IMesh* bulletMesh, int x, int y, int z, float& frameTime);
 	void Looking();
 	bool ClearBullet(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
 	void TakeDamage(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
-	
-};
 
+};
