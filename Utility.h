@@ -23,6 +23,9 @@ namespace utility
 	
 
 	//
-	bool getDistance(float s1xPos, float s1zPos, float s1rad, float s2xPos, float s2zPos, float s2rad);
+	bool SphereCollision(float s1xPos, float s1zPos, float s1rad, float s2xPos, float s2zPos, float s2rad);
+	
+	float getDistance(IModel* player, IModel* object);	//Returns the distance between two models
+	
 
 }
