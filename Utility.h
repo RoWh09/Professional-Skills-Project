@@ -1,5 +1,5 @@
 #pragma once
-#include "TL-Engine.h"
+#include <TL-Engine.h>
 using namespace tle;
 
 //This header contains assisstant functions and struct declarations
@@ -13,32 +13,16 @@ struct Vector3
 
 namespace utility
 {
-	double frameTime;	//Frametime decleared here
 
 	//
-	double frameTime(double frameTime, I3DEngine* myEngine)	//Frame time calculation
-	{
-		return frameTime = myEngine->Timer();
-	}
+	double frameTime(double frameTime, I3DEngine* myEngine);	//Frame time calculation
 	
-	//
-	int framesPerSecond()	//Number of frames in ONE second
-	{
-		return 1 / frameTime;
-	}
 
 	//
-	float getDistance(IModel* player, IModel* object)	//Returns the distance between two models
-	{
-		float playerX = player->GetX();
-		float playerZ = player->GetZ();
+	int framesPerSecond(int frameTime);	//Number of frames in ONE second
+	
 
-		float objectX = object->GetX();
-		float objectZ = object->GetZ();
+	//
+	bool getDistance(float s1xPos, float s1zPos, float s1rad, float s2xPos, float s2zPos, float s2rad);
 
-		float temp1 = (playerX - objectX) * (playerX - objectX);
-		float temp2 = (playerZ - objectZ) * (playerZ - objectZ);
-
-		return sqrt(temp1 + temp2);
-	}
 }
