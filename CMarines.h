@@ -29,6 +29,7 @@ public:
 	bool Delete();
 	void Fire(IModel* dummyModel, IMesh* bulletMesh, int x, int y, int z, float& frameTime);
 	void Looking();
+	void RemoveBullet();
 	bool ClearBullet(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
 	void TakeDamage(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
 
