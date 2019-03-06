@@ -34,12 +34,15 @@ void CPlayer::Move()
 	}
 }
 
-bool CPlayer::Shoot(IModel* dummyModel,deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr, int x, int y, int z)
+bool CPlayer::Shoot(IModel* dummyModel, IMesh* bulletMesh, deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>& bulletPtr, int x, int y, int z)
 {
-	bulletPtr.reset(new CRifle(mEngine, "Cube.x", 1.0));
+	bulletPtr.reset(new CRifle(bulletMesh, 1.0));
 	bulletPtr->buildBullet(x, y, z);
 	bulletPtr->bulletModel->LookAt(dummyModel);
+	bulletPtr->bulletModel->SetSkin("Cacodemon_tlxcutout.png");
+	bulletPtr->bulletModel->Scale(0.2);
 	bulletList.push_back(move(bulletPtr));
+
 
 	return true;
 }
@@ -50,7 +53,7 @@ bool CPlayer::ClearBullet(IModel* dummyModel, deque <unique_ptr < CRifle > >& bu
 	while (p != bulletList.end())
 	{
 		//collision detection with the perimiter wanted
-		bool BulletOutRange = (*p)->getDistance(playerModel->GetX(), playerModel->GetZ(), 100.0f, (*p)->bulletModel->GetX(), (*p)->bulletModel->GetZ(), 2.0f);
+		bool BulletOutRange = (*p)->getDistance(playerModel->GetX(), playerModel->GetZ(), 300.0f, (*p)->bulletModel->GetX(), (*p)->bulletModel->GetZ(), 2.0f);
 
 		if (BulletOutRange == false)
 		{
