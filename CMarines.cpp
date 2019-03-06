@@ -1,40 +1,120 @@
 #include "CMarines.h"
 #include "Utility.h"
 
-CMarine::CMarine()	//Constructor
+CMarine::CMarine(IMesh* marineMesh, float x,float z, float rad)	//Constructor
 {
+	mMesh = marineMesh;
 	health = 3;
 	moveSpeed = 5.0f;
 	fireDistance = 8.0f;
 	fleeDistance = 4.0f;
-
-	/*MISSING MODEL CREATION - NEEDS POSITION WHERE IT WILL BE SPAWNED*/
+	xPos = x;
+	zPos = z;
+	mRad = rad;
 }
 
 CMarine::~CMarine() {};//Destructor
 
-void CMarine::Fire(IModel* player, IModel* marine)
+void CMarine::BuildMarine(int x, int z)
 {
-	if (utility::getDistance(player, marine) =< fireDistance)	//If you are close enough to shoot then do shoot
+	
+	marineModel = mMesh->CreateModel(x, 0.0f, z);
+}
+
+void CMarine::Fire(IModel* player,  IMesh* bulletMesh, int x, int y, int z, float& frameTime)
+{
+	
+	if (frameTime <= 0.5)
+	{ 
+
+	}
+	else
 	{
-		/*MISSING - SPAWN PARTICLE SYSTEM*/
-		/*MISSING - DEAL DAMAGE TO THE PLAYER*/
+		bulletPtr.reset(new CRifle(bulletMesh, 1.0));
+		bulletPtr->buildBullet(x, y, z);
+		bulletPtr->bulletModel->LookAt(player);
+		bulletList.push_back(move(bulletPtr));
+
+		frameTime = 0;
+	}
+
+	auto p = bulletList.begin();
+	while (p != bulletList.end())
+	{
+		(*p)->move(5.0);
+		++p;
+	}
+	ClearBullet(bulletList, bulletPtr);
+}
+
+void CMarine::Approach(IModel* player)
+{
+	marineModel->LookAt(player);
+	marineModel->MoveLocalZ(0.5f);
+}
+
+void CMarine::Aim()
+{
+
+}
+
+void CMarine::Looking()
+{
+
+}
+
+bool CMarine::ClearBullet(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr)
+{
+	auto p = bulletList.begin();//pointer to beggining of the que 
+	while (p != bulletList.end())
+	{
+		//collision detection with the perimiter wanted
+		bool BulletOutRange = (*p)->getDistance(marineModel->GetX(), marineModel->GetZ(), 100.0f, (*p)->bulletModel->GetX(), (*p)->bulletModel->GetZ(), 2.0f);
+
+		if (BulletOutRange == false)
+		{
+			(*p)->Delete();
+			bulletList.erase(p);
+			break;//quits the while loop if collision is detected
+		}
+		p++;
+	}
+	return true;
+}
+
+void CMarine::TakeDamage(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr)
+{
+	auto p = bulletList.begin();
+	while (p != bulletList.end())
+	{
+		bool bulletHit = utility::getDistance(marineModel->GetX(), marineModel->GetZ(), 5.0f, (*p)->bulletModel->GetX(), (*p)->bulletModel->GetZ(), 2.0f);
+		if (bulletHit == true)
+		{
+			(*p)->Delete();
+			bulletList.erase(p);
+			--health;
+			break;//quits the while loop if collision is detected
+		}
+		p++;
 	}
 }
 
-void CMarine::Approach(IModel* player, IModel* marine)
+bool  CMarine::Delete()
 {
-	while (utility::getDistance(player, marine) >= fireDistance)		//Get in firing range
+	
+	if (health <= 0)
 	{
-		marine->LookAt(player);
-		marine->MoveLocalZ(moveSpeed * utility::frameTime);
+		if (!bulletList.empty())
+		{
+			bulletList.front()->Delete();
+		}
+		mMesh->RemoveModel(marineModel);
+		return true;
+		
 	}
-
-	while (utility::getDistance(player, marine) < fleeDistance)		//Move back if you are too close
-	{
-		marine->LookAt(player);
-		marine->MoveLocalZ(-moveSpeed * utility::frameTime);
-	}
+		return false;
+	
 }
+
 
 /*MISSING - NEEDS TO BE DELETED IN THE MAIN IF HEALTH GOES BELOW ZERO*/
