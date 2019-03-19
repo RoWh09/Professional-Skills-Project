@@ -21,5 +21,4 @@ public:
 	void Aim(IModel*, IModel*);
 	void Fire(IModel*, IModel*); //Explode if in range
 	void Reload();
-	void Looking();
 };
