@@ -4,10 +4,6 @@
 CMarine::CMarine(IMesh* marineMesh, float x, float z, float rad)	//Constructor
 {
 	mMesh = marineMesh;
-	health = 3;
-	moveSpeed = 5.0f;
-	fireDistance = 8.0f;
-	fleeDistance = 4.0f;
 	xPos = x;
 	zPos = z;
 	mRad = rad;
