@@ -11,15 +11,15 @@ private:
 	IMesh* mMesh;
 	deque <unique_ptr < CRifle > > bulletList;
 	unique_ptr<CRifle>bulletPtr;
-	float moveSpeed;
-	float fireDistance;		//How far can he start to shoot?
-	float fleeDistance;		//Will flee if too close
+	float moveSpeed = 5.0f;
+	float fireDistance = 8.0f;		//How far can he start to shoot?
+	float fleeDistance = 4.0f;		//Will flee if too close
 	float xPos;
 	float zPos;
 	float mRad;
 
 public:
-	int health;
+	int health = 3;
 	IModel* marineModel;
 	CMarine(IMesh* marineMesh, float x, float z, float rad);
 	~CMarine();
