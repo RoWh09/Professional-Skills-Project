@@ -6,10 +6,10 @@ using namespace tle;
 class CDroid : IEnemies
 {
 private:
-	int health;
-	float moveSpeed;
-	float explosionDistance;	//How far can he start to shoot?
-	float explosionRadius;		//Will flee if too close
+	int health = 2;
+	float moveSpeed = 8.0f;
+	float explosionDistance = 2.0f;	//How far can he start to shoot?
+	float explosionRadius = 4.0f;		//Will flee if too close
 
 	IMesh* droidMesh;
 	IModel* droidModel;
