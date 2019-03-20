@@ -14,6 +14,7 @@ public:
 	virtual void Aim() = 0;
 	virtual void Fire() = 0;
 	virtual void Reload() = 0;
-	virtual void Looking() = 0;
-
+	void Looking(IModel* model) { model->RotateY(ROTATION_SPEED) };
+	
+	const float ROTATION_SPEED = 5.0f;
 };

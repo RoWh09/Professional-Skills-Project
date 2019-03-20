@@ -3,11 +3,6 @@
 
 CDroid::CDroid()
 {
-	health = 2;
-	moveSpeed = 8.0f;
-	explosionDistance = 2.0f;
-	explosionRadius = 4.0f;
-
 	/*MISSING MODEL CREATION - NEEDS POSITION WHERE IT WILL BE SPAWNED*/
 }
 
