@@ -29,6 +29,7 @@ void CMarine::Fire(IModel* player, IMesh* bulletMesh, int x, int y, int z, float
 		bulletPtr.reset(new CRifle(bulletMesh, 1.0));
 		bulletPtr->buildBullet(x, y, z);
 		bulletPtr->bulletModel->LookAt(player);
+		bulletPtr->bulletModel->Scale(0.2);
 		bulletList.push_back(move(bulletPtr));
 
 		frameTime = 0;
@@ -57,6 +58,11 @@ void CMarine::Aim()
 void CMarine::Looking()
 {
 
+}
+
+void CMarine::RemoveBullet()
+{
+	//mMesh->RemoveModel()
 }
 
 bool CMarine::ClearBullet(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr)
@@ -102,13 +108,30 @@ bool  CMarine::Delete()
 	{
 		if (!bulletList.empty())
 		{
-			bulletList.front()->Delete();
+			bool finished = false;
+			while (finished == false)
+			{
+				auto p = bulletList.begin();
+				
+				if (p == bulletList.end())
+				{
+					finished = true;
+				}
+				else
+				{
+					(*p)->Delete();
+					bulletList.erase(p);
+				}
+				
+				
+			}
 		}
+		
 		mMesh->RemoveModel(marineModel);
 		return true;
-
+		
 	}
-	return false;
+
 
 }
 

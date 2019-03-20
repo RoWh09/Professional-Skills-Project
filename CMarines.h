@@ -9,18 +9,18 @@ class CMarine : IEnemy
 {
 private:
 	IMesh* mMesh;
-	deque <unique_ptr < CRifle > > bulletList;
 	unique_ptr<CRifle>bulletPtr;
-	float moveSpeed = 5.0f;
-	float fireDistance = 8.0f;		//How far can he start to shoot?
-	float fleeDistance = 4.0f;		//Will flee if too close
+	float moveSpeed;
+	float fireDistance;		//How far can he start to shoot?
+	float fleeDistance;		//Will flee if too close
 	float xPos;
 	float zPos;
 	float mRad;
 
 public:
-	int health = 3;
+	int health;
 	IModel* marineModel;
+	deque <unique_ptr < CRifle > > bulletList;
 	CMarine(IMesh* marineMesh, float x, float z, float rad);
 	~CMarine();
 	void BuildMarine(int x, int z);
@@ -28,7 +28,9 @@ public:
 	void Aim();
 	bool Delete();
 	void Fire(IModel* dummyModel, IMesh* bulletMesh, int x, int y, int z, float& frameTime);
+	void Looking();
+	void RemoveBullet();
 	bool ClearBullet(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
 	void TakeDamage(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
-
+	bool Delay(const float frameTimeFixed, float tickDelay);
 };
