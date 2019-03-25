@@ -1,17 +1,17 @@
 #include "Weapons.h"
 
 //initialising the game with the existing tlEngine and the wanted speed of the bullet
-CRifle::CRifle(I3DEngine* myEngine, string meshName, int speed)
+CRifle::CRifle(IMesh* bulletMesh, int speed)
 {
-	mEngine = myEngine;
-	bulletMesh = mEngine->LoadMesh(meshName);
+	mMesh = bulletMesh;
 	mSpeed = speed;
 }
 
 //Creating an instance of the bullet
 bool CRifle::buildBullet(int x, int y, int z)
 {
-	bulletModel = bulletMesh->CreateModel(x, y, z);
+	bulletModel = mMesh->CreateModel(x, y, z);
+	bulletModel->SetSkin("red.PNG");
 	return true;
 }
 
@@ -24,15 +24,16 @@ float CRifle::GetPosition(float& x, float& z)
 }
 
 //Moving the bullet foward
-void CRifle::move(int speed)
+void CRifle::move(float frameTime)
 {
-	bulletModel->MoveLocalZ(speed);
+	float speed = 1000.0f;
+	bulletModel->MoveLocalZ(speed * frameTime);
 }
 
 //Delte the bulletModel
 void CRifle::Delete()
 {
-	bulletMesh->RemoveModel(bulletModel);
+	mMesh->RemoveModel(bulletModel);
 }
 
 void CRifle::BulletCheck(float playerxPos, float playerzPos, float playerRad, deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr)
@@ -41,7 +42,7 @@ void CRifle::BulletCheck(float playerxPos, float playerzPos, float playerRad, de
 	while (p != bulletList.end())
 	{
 		(*p)->GetPosition(bulletxPos, bulletzPos);
-		bool BulletOutRange = getDistance(playerxPos, playerzPos, playerRad, bulletxPos, bulletzPos, 2.0f);
+		bool BulletOutRange = utility::getDistance(playerxPos, playerzPos, playerRad, bulletxPos, bulletzPos, 2.0f);
 
 		if (BulletOutRange == false)
 		{
@@ -61,4 +62,3 @@ bool CRifle::getDistance(float s1xPos, float s1zPos, float s1rad, float s2xPos, 
 
 	return (distance < (s1rad + s2rad));
 }
-

@@ -12,13 +12,14 @@ class CPlayer
 private:
 	I3DEngine* mEngine;
 	string mName;
-	int mHealth;
 	int mAmo;
 
 public:
+	int mHealth;
 	IModel* playerModel;
-	CPlayer(IMesh* playerMesh ,I3DEngine* myEngine, string name, int health, int amo);
-	void Move();
+	CPlayer(deque <unique_ptr < SHealthUI > >& healthList, unique_ptr<SHealthUI>&healthPtr, IMesh* playerMesh ,I3DEngine* myEngine, string name, int health, int amo);
+	void Move(float frameRate);
+	void Damage(I3DEngine* myEngine, deque <unique_ptr < CRifle > >& bulletList, deque <unique_ptr < SHealthUI > >& healthList);
 	bool Shoot(IModel* dummyModel, IMesh* bulletMesh, deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>& bulletPtr, int x, int y, int z);
 	bool ClearBullet(IModel* dummyModel, deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
 };

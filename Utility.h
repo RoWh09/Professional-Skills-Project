@@ -11,9 +11,15 @@ struct Vector3
 	float posZ;
 };
 
+struct SHealthUI
+{
+	string hamName;
+	ISprite* hamHealth;
+};
+
 namespace utility
 {
-
+	
 	//
 	double frameTime(double frameTime, I3DEngine* myEngine);	//Frame time calculation
 	
@@ -23,9 +29,8 @@ namespace utility
 	
 
 	//
-	bool SphereCollision(float s1xPos, float s1zPos, float s1rad, float s2xPos, float s2zPos, float s2rad);
-	
-	float getDistance(IModel* player, IModel* object);	//Returns the distance between two models
-	
+	bool getDistance(float s1xPos, float s1zPos, float s1rad, float s2xPos, float s2zPos, float s2rad);
 
+	//
+	bool Delay(const float frameTimeFixed, float tickDelay);
 }

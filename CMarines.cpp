@@ -4,6 +4,10 @@
 CMarine::CMarine(IMesh* marineMesh, float x, float z, float rad)	//Constructor
 {
 	mMesh = marineMesh;
+	health = 3;
+	moveSpeed = 0.10f;
+	fireDistance = 8.0f;
+	fleeDistance = 4.0f;
 	xPos = x;
 	zPos = z;
 	mRad = rad;
@@ -17,37 +21,37 @@ void CMarine::BuildMarine(int x, int z)
 	marineModel = mMesh->CreateModel(x, 0.0f, z);
 }
 
-void CMarine::Fire(IModel* player, IMesh* bulletMesh, int x, int y, int z, float& frameTime)
+void CMarine::Fire(IModel* player, IMesh* bulletMesh, int x, int y, int z, float frameTime)
 {
-
-	if (frameTime <= 0.5)
-	{
-
-	}
-	else
+	float speed = 10;
+	bool ShotFired = false;
+	const float frameTimeFixed = 1.0f / 60;
+	float tickDelay = 0.50f;
+	ShotFired = Delay(frameTimeFixed, tickDelay);
+	if (ShotFired == true)
 	{
 		bulletPtr.reset(new CRifle(bulletMesh, 1.0));
 		bulletPtr->buildBullet(x, y, z);
 		bulletPtr->bulletModel->LookAt(player);
 		bulletPtr->bulletModel->Scale(0.2);
 		bulletList.push_back(move(bulletPtr));
-
-		frameTime = 0;
+		ShotFired = false;
 	}
 
 	auto p = bulletList.begin();
 	while (p != bulletList.end())
 	{
-		(*p)->move(5.0);
+		(*p)->move(frameTime);
 		++p;
 	}
 	ClearBullet(bulletList, bulletPtr);
 }
 
-void CMarine::Approach(IModel* player)
+void CMarine::Approach(IModel* player, float frameTime)
 {
+	float speed = 50.0f;
 	marineModel->LookAt(player);
-	marineModel->MoveLocalZ(0.5f);
+	marineModel->MoveLocalZ(speed * frameTime);
 }
 
 void CMarine::Aim()
@@ -55,10 +59,7 @@ void CMarine::Aim()
 
 }
 
-void CMarine::Looking()
-{
-
-}
+void CMarine::Looking() {};
 
 void CMarine::RemoveBullet()
 {
@@ -71,7 +72,7 @@ bool CMarine::ClearBullet(deque <unique_ptr < CRifle > >& bulletList, unique_ptr
 	while (p != bulletList.end())
 	{
 		//collision detection with the perimiter wanted
-		bool BulletOutRange = (*p)->getDistance(marineModel->GetX(), marineModel->GetZ(), 100.0f, (*p)->bulletModel->GetX(), (*p)->bulletModel->GetZ(), 2.0f);
+		bool BulletOutRange = (*p)->getDistance(marineModel->GetX(), marineModel->GetZ(), 200.0f, (*p)->bulletModel->GetX(), (*p)->bulletModel->GetZ(), 2.0f);
 
 		if (BulletOutRange == false)
 		{
@@ -135,5 +136,18 @@ bool  CMarine::Delete()
 
 }
 
+bool CMarine::Delay(const float frameTimeFixed, float tickDelay)
+{
+	static float counterFrame = 0.0f;
+
+	counterFrame += frameTimeFixed;
+
+	if (counterFrame > tickDelay)
+	{
+		counterFrame = 0;
+		return true;
+	}
+	return false;
+}
 
 /*MISSING - NEEDS TO BE DELETED IN THE MAIN IF HEALTH GOES BELOW ZERO*/

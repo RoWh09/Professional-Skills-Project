@@ -24,10 +24,10 @@ public:
 	CMarine(IMesh* marineMesh, float x, float z, float rad);
 	~CMarine();
 	void BuildMarine(int x, int z);
-	void Approach(IModel* player);	//Move till you get in range or move away if you are too close
+	void Approach(IModel* player, float frameTime);	//Move till you get in range or move away if you are too close
 	void Aim();
 	bool Delete();
-	void Fire(IModel* dummyModel, IMesh* bulletMesh, int x, int y, int z, float& frameTime);
+	void Fire(IModel* dummyModel, IMesh* bulletMesh, int x, int y, int z, float frameTime);
 	void Looking();
 	void RemoveBullet();
 	bool ClearBullet(deque <unique_ptr < CRifle > >& bulletList, unique_ptr<CRifle>&bulletPtr);
